@@ -1,0 +1,2 @@
+var current_path = process.cwd();
+require(current_path + '/service/app.js');
