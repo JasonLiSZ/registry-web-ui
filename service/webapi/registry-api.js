@@ -10,9 +10,21 @@ var fnListImage = async(ctx, next) => {
     'registry': registry,
     'user': user,
     'password': password
-  });
+  }, function (result) {
+    try {
+      let data = JSON.parse(result);
 
-  ctx.response.body = result;
+      if (data.errors && data.errors.length > 0) {
+        ctx.response.body = data.errors[0].message;
+        ctx.response.status = 500;
+        return;
+      }
+
+      ctx.response.body = data;
+    } catch (ex) {
+      ctx.throw(ex.message, 500);
+    }
+  });
 };
 
 var fnListImageTag = async(ctx, next) => {
@@ -27,9 +39,21 @@ var fnListImageTag = async(ctx, next) => {
     'user': user,
     'password': password,
     'image': image
-  });
+  }, function (result) {
+    try {
+      let data = JSON.parse(result);
 
-  ctx.response.body = result;
+      if (data.errors && data.errors.length > 0) {
+        ctx.response.body = data.errors[0].message;
+        ctx.response.status = 500;
+        return;
+      }
+
+      ctx.response.body = data;
+    } catch (ex) {
+      ctx.throw(ex.message, 500);
+    }
+  });
 };
 
 var fnGetImageTagHead = async(ctx, next) => {
@@ -46,9 +70,20 @@ var fnGetImageTagHead = async(ctx, next) => {
     'password': password,
     'image': image,
     'tag': tag
-  });
+  }, function (result) {
+    //Docker-Content-Digest: sha256:467af83b77759844196762fc8d9e981a0c3d4fa3c59d76445b7e35a6ee5ca916
+    var matches = result.match(/Docker-Content-Digest: .*/);
+    if (matches && matches.length == 1) {
+      var sha256 = matches[0].replace(/Docker-Content-Digest: /, '');
+      ctx.response.body = {
+        'digest': sha256
+      };
+      return;
+    }
 
-  ctx.response.body = result;
+    ctx.response.body = 'not found'
+    ctx.response.status = 4040;
+  });
 };
 
 var fnGetImageTagBody = async(ctx, next) => {
@@ -65,9 +100,21 @@ var fnGetImageTagBody = async(ctx, next) => {
     'password': password,
     'image': image,
     'tag': tag
-  });
+  }, function (result) {
+    try {
+      let data = JSON.parse(result);
 
-  ctx.response.body = result;
+      if (data.errors && data.errors.length > 0) {
+        ctx.response.body = data.errors[0].message;
+        ctx.response.status = 500;
+        return;
+      }
+
+      ctx.response.body = data;
+    } catch (ex) {
+      ctx.throw(ex.message, 500);
+    }
+  });
 };
 
 var fnDeleteImageTag = async(ctx, next) => {
@@ -84,9 +131,26 @@ var fnDeleteImageTag = async(ctx, next) => {
     'password': password,
     'image': image,
     'digest': digest
-  });
+  }, function (result) {
+    try {
+      if (result == '') {
+        ctx.response.body = 'delete success';
+        return;
+      }
 
-  ctx.response.body = result;
+      let data = JSON.parse(result);
+
+      if (data.errors && data.errors.length > 0) {
+        ctx.response.body = data.errors[0].message;
+        ctx.response.status = 500;
+        return;
+      }
+
+      ctx.response.body = data;
+    } catch (ex) {
+      ctx.throw(ex.message, 500);
+    }
+  });
 }
 
 module.exports = {
