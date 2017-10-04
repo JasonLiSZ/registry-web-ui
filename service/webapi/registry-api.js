@@ -1,48 +1,72 @@
+const registryCmd = require('../command/registry-cmd');
+const cmd = new registryCmd();
+
 var fnListImage = async(ctx, next) => {
-  let product = ctx.request.body;
+  let registry = ctx.request.header.registry;
+  let user = ctx.request.header.user;
+  let password = ctx.request.header.password;
 
-  console.log('add: %s', JSON.stringify(product));
+  let result = cmd.listImage(registry, user, password);
 
-  ctx.response.body = JSON.parse('{"name": "abc", "age": 34}');
+  ctx.response.body = result;
 };
 
-var fnListTag = async(ctx, next) => {
-  let product = ctx.request.body;
+var fnListImageTag = async(ctx, next) => {
+  let registry = ctx.request.header.registry;
+  let user = ctx.request.header.user;
+  let password = ctx.request.header.password;
 
-  console.log('add: %s', JSON.stringify(product));
+  let image = ctx.params.image;
 
-  ctx.response.body = JSON.parse('{"name": "abc", "age": 34}');
+  let result = cmd.listImageTag(registry, user, password, image);
+
+  ctx.response.body = result;
 };
 
-var fnGetImageHead = async(ctx, next) => {
-  let product = ctx.request.body;
+var fnGetImageTagHead = async(ctx, next) => {
+  let registry = ctx.request.header.registry;
+  let user = ctx.request.header.user;
+  let password = ctx.request.header.password;
 
-  console.log('add: %s', JSON.stringify(product));
+  let image = ctx.params.image;
+  let tag = ctx.params.tag;
 
-  ctx.response.body = JSON.parse('{"name": "abc", "age": 34}');
+  let result = cmd.getImageTagHead(registry, user, password, image, tag);
+
+  ctx.response.body = result;
 };
 
-var fnGetImageDetail = async(ctx, next) => {
-  let product = ctx.request.body;
+var fnGetImageTagBody = async(ctx, next) => {
+  let registry = ctx.request.header.registry;
+  let user = ctx.request.header.user;
+  let password = ctx.request.header.password;
 
-  console.log('add: %s', JSON.stringify(product));
+  let image = ctx.params.image;
+  let tag = ctx.params.tag;
 
-  ctx.response.body = JSON.parse('{"name": "abc", "age": 34}');
+  let result = cmd.getImageTagBody(registry, user, password, image, tag);
+
+  ctx.response.body = result;
 };
 
-var fnDeleteImage = async(ctx, next) => {
-  let id = ctx.params.id;
+var fnDeleteImageTag = async(ctx, next) => {
+  let registry = ctx.request.header.registry;
+  let user = ctx.request.header.user;
+  let password = ctx.request.header.password;
 
-  console.log('delete: %s', id);
+  let image = ctx.params.image;
+  let digest = ctx.params.digest;
 
-  ctx.response.body = JSON.parse('{"name": "abc", "age": 36}');
+  let result = cmd.deleteImageTag(registry, user, password, image, digest);
+
+  ctx.response.body = result;
 }
 
 module.exports = {
   'GET /image/': fnListImage,
-  'GET /image/tag/': fnListTag,
-  'GET /image/:tag/head/': fnGetImageHead,
-  'GET /image/:tag/detail/': fnGetImageDetail,
+  'GET /image/:image/tag/': fnListImageTag,
+  'GET /image/:image/tag/:tag/head/': fnGetImageTagHead,
+  'GET /image/:image/tag/:tag/body/': fnGetImageTagBody,
 
-  'DELETE /image/:digest': fnDelete
+  'DELETE /image/:image/digest/:digest': fnDeleteImageTag
 };
