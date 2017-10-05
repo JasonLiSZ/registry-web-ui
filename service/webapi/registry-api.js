@@ -10,7 +10,7 @@ var fnListImage = async(ctx, next) => {
       'registry': registry,
       'user': user,
       'password': password
-    }).then(result => ctx.response.body = result)
+    }).then(result => ctx.response.body = JSON.parse(result))
     .catch(err => {
       ctx.response.body = err.message;
       ctx.response.status = 500;
@@ -29,7 +29,7 @@ var fnListImageTag = async(ctx, next) => {
       'user': user,
       'password': password,
       'image': image
-    }).then(result => ctx.response.body = result)
+    }).then(result => ctx.response.body = JSON.parse(result))
     .catch(err => {
       ctx.response.body = err.message;
       ctx.response.status = 500;
@@ -50,7 +50,18 @@ var fnGetImageTagHead = async(ctx, next) => {
       'password': password,
       'image': image,
       'tag': tag
-    }).then(result => ctx.response.body = result)
+    }).then(result => {
+      var matches = result.match(/Docker-Content-Digest: .*/);
+      if (matches && matches.length == 1) {
+        var sha256 = matches[0].replace(/Docker-Content-Digest: /, '');
+        ctx.response.body = {
+          'digest': sha256
+        };
+      }
+      else{
+        ctx.response.status = 404;
+      }
+    })
     .catch(err => {
       ctx.response.body = err.message;
       ctx.response.status = 500;
@@ -71,7 +82,7 @@ var fnGetImageTagBody = async(ctx, next) => {
       'password': password,
       'image': image,
       'tag': tag
-    }).then(result => ctx.response.body = result)
+    }).then(result => ctx.response.body = JSON.parse(result))
     .catch(err => {
       ctx.response.body = err.message;
       ctx.response.status = 500;

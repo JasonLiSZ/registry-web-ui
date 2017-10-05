@@ -34,12 +34,11 @@ class RegistryCmd {
     return new Promise((resolve, reject) =>{
       child_process.exec(cmd, function(err, stdout, stderr){
         if(err) reject(err);
+        if(cmd.indexOf('application/vnd.docker.distribution.manifest.v2+json') > 0) resolve(stderr);
         else resolve(stdout);
       });
     });
   }
-
-
 }
 
 module.exports = RegistryCmd;
