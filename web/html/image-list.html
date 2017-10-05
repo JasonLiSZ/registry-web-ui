@@ -1,0 +1,25 @@
+<div class="panel-group" id="image-list" role="tablist" aria-multiselectable="true">
+  <div ng-repeat="img in image.list" ng-click="image.select(img)" class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a ng-click="image.loadTag(img)"
+           class="collapsed"
+           role="button"
+           data-toggle="collapse"
+           data-parent="#accordion"
+           href="#collapseTwo"
+           aria-expanded="false"
+           aria-controls="collapseTwo">
+           {{ img.name }}
+          </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <ul>
+          <li ng-repeat="tag in img.tags">{{ tag }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

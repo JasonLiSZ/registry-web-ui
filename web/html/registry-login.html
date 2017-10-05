@@ -1,0 +1,24 @@
+<nav id="registry-login" class="navbar navbar-default" role="navigation">
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <form class="navbar-form navbar-left" role="search">
+      <strong>Registry:</strong>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="registry" ng-model="login.registry" />
+      </div>
+      &nbsp;
+      <strong>User:</strong>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search" ng-model="login.user" />
+      </div>
+      &nbsp;
+      <strong>Password:</strong>
+      <div class="form-group">
+        <input type="password" class="form-control" ng-model="login.password" />
+      </div>
+      &nbsp;
+      <button type="button" class="btn btn-default" ng-click="login.loadImage()">Login</button>
+    </form>
+  </div>
+  <!-- /.navbar-collapse -->
+</nav>
