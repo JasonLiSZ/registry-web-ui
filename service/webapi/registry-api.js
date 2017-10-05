@@ -116,5 +116,5 @@ module.exports = {
   'GET /image/:image/tag/:tag/head/': fnGetImageTagHead,
   'GET /image/:image/tag/:tag/body/': fnGetImageTagBody,
 
-  'DELETE /image/:image/digest/:digest': fnDeleteImageTag
+  'DELETE /image/:image/digest/:digest/': fnDeleteImageTag
 };

@@ -1,16 +1,15 @@
 #registry-login {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
-#image-list {
-  float: left;
-  width: 200px;
-}
-
-#image-tag-list{
+#image-tag-list {
   padding: 5px;
 }
 
-#image-tag-list ul{
+#image-tag-list ul {
   margin: 0px;
+}
+
+#tag-info{
+  float:left;
 }

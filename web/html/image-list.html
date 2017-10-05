@@ -1,15 +1,9 @@
-<div class="panel-group" id="image-list" role="tablist" aria-multiselectable="true">
+<div id="image-list" class="panel-group col-xs-2 col-sm-2 col-md-2 col-lg-2" role="tablist" aria-multiselectable="true">
   <div ng-repeat="(index, img) in image.list" ng-click="image.select(img)" class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
-        <a ng-click="image.loadTag(img)"
-           class="collapsed"
-           role="button"
-           data-toggle="collapse"
-           data-parent="#accordion"
-           href="#collapse{{ index }}"
-           aria-expanded="false"
-           aria-controls="collapse{{ index }}">
+        <a ng-click="image.loadTag(img)" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ index }}"
+          aria-expanded="false" aria-controls="collapse{{ index }}">
            {{ img.name }}
           </a>
       </h4>
@@ -17,7 +11,9 @@
     <div id="collapse{{ index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ index }}">
       <div id="image-tag-list" class="panel-body">
         <ul>
-          <li ng-repeat="tag in img.tags">{{ tag }}</li>
+          <li ng-repeat="tag in img.tags">
+            <a ng-click="tag.select(tag)">{{ tag.tagName }}</a>
+          </li>
         </ul>
       </div>
     </div>

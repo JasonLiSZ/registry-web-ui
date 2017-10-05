@@ -1,0 +1,12 @@
+<div id="tag-info" class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-show="tag.imageName">
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-default">{{ tag.imageName }}</button>
+    <button type="button" class="btn btn-default">{{ tag.tagName }} </button>
+    <button type="button" class="btn btn-default">{{ tag.digest }}</button>
+  </div>
+
+  <button type="button" class="btn btn-danger" ng-click="tag.delete(tag)">Delete</button>
+
+  <hr/> {{ tag.info }}
+</div>

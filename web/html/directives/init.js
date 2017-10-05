@@ -1,6 +1,6 @@
-var m = angular.module("registry-operation", []);
+var md = angular.module("registry-operation", []);
 
-m.directive("registryLogin", ["$http", function ($http) {
+md.directive("registryLogin", ["$http", function ($http) {
   return {
     restrict: "E",
     replace: true,
@@ -29,7 +29,7 @@ m.directive("registryLogin", ["$http", function ($http) {
   };
 }]);
 
-m.directive("imageList", ["$http", function ($http) {
+md.directive("imageList", ["$http", function ($http) {
   return {
     restrict: "E",
     replace: true,
@@ -42,26 +42,106 @@ m.directive("imageList", ["$http", function ($http) {
           $scope.image.list = [];
           for (var i = 0; i < items.length; i++) {
             $scope.image.list.push({
-              "name": items[i],
-              "tags": []
+              name: items[i],
+              tags: []
             });
           }
-        },
-        select: function (itme) {
-          $scope.image.selected = itme;
-        },
 
-        loadTag: function (itme) {
+          $scope.tag.clear();
+        },
+        select: function (item) {
+          $scope.image.selected = item;
+        },
+        loadTag: function (item) {
           $http({
             method: "get",
-            url: "http://localhost:3000/image/" + encodeURIComponent(itme.name) + "/tag/",
+            url: "http://localhost:3000/image/" + encodeURIComponent(item.name) + "/tag/",
+            headers: {
+              "registry": $scope.login.registry,
+              "user": $scope.login.user,
+              "password": $scope.login.password
+            }
+          }).then(function (res) {
+            item.tags = [];
+
+            for (var i = 0; i < res.data.tags.length; i++) {
+              item.tags.push({
+                imageName: item.name,
+                tagName: res.data.tags[i],
+                tagInfo: {},
+                select: function (item) {
+                  $scope.tag.init(item);
+                }
+              });
+            }
+          });
+        }
+      };
+    }]
+  };
+}]);
+
+md.directive("tagInfo", ["$http", function ($http) {
+  return {
+    restrict: "E",
+    replace: true,
+    templateUrl: "tag-info.html",
+    controller: ['$scope', function ($scope) {
+      $scope.tag = {
+        imagesName: "",
+        tagName: "",
+        info: {},
+        digest: "",
+        clear: function(){
+          $scope.tag.imageName = "";
+          $scope.tag.tagName = "";
+          $scope.tag.info = {};
+          $scope.tag.digest = "";
+        },
+        init: function (tag) {
+          $scope.tag.imageName = tag.imageName;
+          $scope.tag.tagName = tag.tagName;
+
+          $http({
+            method: "get",
+            url: "http://localhost:3000/image/" + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/head/",
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,
               'password': $scope.login.password
             }
           }).then(function (res) {
-            itme.tags = res.data.tags;
+            $scope.tag.digest = res.data.digest;
+          });
+
+          $http({
+            method: "get",
+            url: "http://localhost:3000/image/" + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/body/",
+            headers: {
+              'registry': $scope.login.registry,
+              'user': $scope.login.user,
+              'password': $scope.login.password
+            }
+          }).then(function (res) {
+            $scope.tag.info = res.data;
+          });
+
+        },
+        delete: function (item) {
+          $http({
+            method: "delete",
+            url: "http://localhost:3000/image/" + encodeURIComponent(item.imageName) + "/digest/" + item.digest + "/",
+            headers: {
+              'registry': $scope.login.registry,
+              'user': $scope.login.user,
+              'password': $scope.login.password
+            }
+          }).then(function (res) {
+            if(res.status == 200){
+              alert('delete success');
+
+              $scope.login.loadImage();
+            }
           });
         }
       };
