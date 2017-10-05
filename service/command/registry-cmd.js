@@ -37,13 +37,6 @@ class RegistryCmd {
         else resolve(stdout);
       });
     });
-
-    /*
-    var resp = child_process.execSync(cmd);
-    var result = resp.toString('UTF8');
-
-    callback(result);
-    */
   }
 
 
