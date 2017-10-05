@@ -54,7 +54,7 @@ m.directive("imageList", ["$http", function ($http) {
         loadTag: function (itme) {
           $http({
             method: "get",
-            url: "http://localhost:3000/image/" + itme.name + "/tag/",
+            url: "http://localhost:3000/image/" + encodeURIComponent(itme.name) + "/tag/",
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,

@@ -6,3 +6,11 @@
   float: left;
   width: 200px;
 }
+
+#image-tag-list{
+  padding: 5px;
+}
+
+#image-tag-list ul{
+  margin: 0px;
+}
