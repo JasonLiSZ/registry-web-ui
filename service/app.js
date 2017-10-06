@@ -14,6 +14,8 @@ app.use(cors());
 app.use(bodyParser());
 app.use(wrapper('/webapi'));
 
-app.listen(3000, function() {
-  console.log('App listening on port 3000!');
+const service_port = 3000;
+
+app.listen(service_port, function() {
+  console.log('App listening on port %s!', service_port);
 });

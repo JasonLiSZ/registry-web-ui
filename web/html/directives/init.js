@@ -1,3 +1,5 @@
+const base_web_url = "http://localhost:3000/image/";
+
 var md = angular.module("registry-operation", []);
 
 md.directive("registryLogin", ["$http", function ($http) {
@@ -14,7 +16,7 @@ md.directive("registryLogin", ["$http", function ($http) {
         loadImage: function () {
           $http({
             method: "get",
-            url: "http://localhost:3000/image/",
+            url: base_web_url,
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,
@@ -55,7 +57,7 @@ md.directive("imageList", ["$http", function ($http) {
         loadTag: function (item) {
           $http({
             method: "get",
-            url: "http://localhost:3000/image/" + encodeURIComponent(item.name) + "/tag/",
+            url: base_web_url + encodeURIComponent(item.name) + "/tag/",
             headers: {
               "registry": $scope.login.registry,
               "user": $scope.login.user,
@@ -104,7 +106,7 @@ md.directive("tagInfo", ["$http", function ($http) {
 
           $http({
             method: "get",
-            url: "http://localhost:3000/image/" + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/head/",
+            url: base_web_url + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/head/",
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,
@@ -116,7 +118,7 @@ md.directive("tagInfo", ["$http", function ($http) {
 
           $http({
             method: "get",
-            url: "http://localhost:3000/image/" + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/body/",
+            url: base_web_url + encodeURIComponent(tag.imageName) + "/tag/" + tag.tagName + "/body/",
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,
@@ -130,7 +132,7 @@ md.directive("tagInfo", ["$http", function ($http) {
         delete: function (item) {
           $http({
             method: "delete",
-            url: "http://localhost:3000/image/" + encodeURIComponent(item.imageName) + "/digest/" + item.digest + "/",
+            url: base_web_url + encodeURIComponent(item.imageName) + "/digest/" + item.digest + "/",
             headers: {
               'registry': $scope.login.registry,
               'user': $scope.login.user,
