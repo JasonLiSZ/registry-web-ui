@@ -7,7 +7,7 @@ md.directive("registryLogin", ["$http", function ($http) {
     templateUrl: "registry-login.html",
     controller: ['$scope', function ($scope) {
       $scope.login = {
-        registry: 'docker.scrumpro.cn:5000',
+        registry: 'localhost:5000',
         user: 'root',
         password: 'root',
 
