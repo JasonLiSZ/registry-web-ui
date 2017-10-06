@@ -33,21 +33,14 @@ The application boasts the following features:
 
  * 2 adjust port
 
-  adjust web port from ./web/app.js
-  adjust service port from ./service/app.js
+	adjust web port from ./web/app.js
+
+	adjust service port from ./service/app.js
 
  * 3 run
 
 	npm start
 
- * 4 run with pm2
+ * 4 host in pm2
 
 	pm2 start ./bin/run
-  
-  查看状态
-	pm2 status
-┌──────────┬────┬──────┬───────┬────────┬─────────┬────────┬─────┬───────────┬───────┬──────────┐
-│ App name │ id │ mode │ pid   │ status │ restart │ uptime │ cpu │ mem       │ user  │ watching │
-├──────────┼────┼──────┼───────┼────────┼─────────┼────────┼─────┼───────────┼───────┼──────────┤
-│ run      │ 0  │ fork │ 25884 │ online │ 0       │ 4s     │ 0%  │ 36.2 MB   │ jason │ disabled │
-└──────────┴────┴──────┴───────┴────────┴─────────┴────────┴─────┴───────────┴───────┴──────────┘
